@@ -1,42 +1,35 @@
 ﻿using Prism;
 using Prism.Ioc;
-using Prism.Unity;
-using System;
+using SICONDEP.ViewModels;
+using SICONDEP.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace SICONDEP
 {
-    public partial class App : PrismApplication
+    public partial class App
     {
-        public App(IPlatformInitializer initializer = null)
-            : base(initializer)
-        {
-        }
+        /* 
+         * The Xamarin Forms XAML Previewer in Visual Studio uses System.Activator.CreateInstance.
+         * This imposes a limitation in which the App class must have a default constructor. 
+         * App(IPlatformInitializer initializer = null) cannot be handled by the Activator.
+         */
+        public App() : this(null) { }
 
-        protected override void OnStart()
-        {
-            // Handle when your app starts
-        }
+        public App(IPlatformInitializer initializer) : base(initializer) { }
 
-        protected override void OnSleep()
+        protected override async void OnInitialized()
         {
-            // Handle when your app sleeps
-        }
+            InitializeComponent();
 
-        protected override void OnResume()
-        {
-            // Handle when your app resumes
+            await NavigationService.NavigateAsync("NavigationPage/LoginPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            throw new NotImplementedException();
-        }
-
-        protected override void OnInitialized()
-        {
-            InitializeComponent();
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
         }
     }
 }
