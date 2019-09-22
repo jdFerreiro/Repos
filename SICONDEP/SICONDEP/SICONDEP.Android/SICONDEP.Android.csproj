@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BD949E3E-F3C6-439E-BF81-DDE7F27F7968}</ProjectGuid>
+    <ProjectGuid>{6F7ECE36-9378-46FE-801E-7A55299BA133}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -55,19 +55,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="UXDivers.GorillaPlayer.Common">
-      <Version>0.9.1.2</Version>
-    </PackageReference>
-    <PackageReference Include="UXDivers.GorillaPlayer.SDK">
-      <Version>1.5.2</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.2.0.815419" />
-    <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.v4" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Forms" Version="3.6.0.344457" />
+    <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.1" />
+    <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.1" />
+    <PackageReference Include="Xamarin.Android.Support.v4" Version="28.0.0.1" />
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.1" />
+    <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="28.0.0.1" />
+    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="28.0.0.1" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1367" />
   </ItemGroup>
   <ItemGroup>
