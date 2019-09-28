@@ -7,7 +7,7 @@ using System.Text;
 
 namespace SICONDEP.ViewModels
 {
-    public class ViewModelBase : BindableBase, IInitialize, INavigationAware, IDestructible
+    public class BaseViewModel : BindableBase, IInitialize, INavigationAware, IDestructible
     {
         protected INavigationService NavigationService { get; private set; }
 
@@ -18,7 +18,22 @@ namespace SICONDEP.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
-        public ViewModelBase(INavigationService navigationService)
+        private bool isBusy;
+        public bool IsBusy
+        {
+            get { return isBusy; }
+            set { SetProperty(ref isBusy, value); }
+        }
+
+        public bool IsNotBusy
+        {
+            get
+            {
+                return !IsBusy;
+            }
+        }
+
+        public BaseViewModel(INavigationService navigationService)
         {
             NavigationService = navigationService;
         }

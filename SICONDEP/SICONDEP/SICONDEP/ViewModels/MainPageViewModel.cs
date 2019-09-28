@@ -8,12 +8,34 @@ using System.Text;
 
 namespace SICONDEP.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase
+    public class MainPageViewModel : BaseViewModel
     {
+        
         public MainPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
-            Title = "Main Page";
+            Title = "Página principal";
+            
+
+        }
+
+        private string userName;
+        public string UserName
+        {
+            get { return userName; }
+            set { SetProperty(ref userName, value); }
+        }
+
+        public DelegateCommand<string> NavigateCommand { get; }
+
+        private async void OnNavigateCommandExecuted(string path)
+        {
+            await NavigationService.NavigateAsync(path);
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            UserName = Settings.Current.UserName();
         }
     }
 }
