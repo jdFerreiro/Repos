@@ -1,11 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SICONDEP.Views.MainPage"
-             Title="{Binding Title}">
+<MasterDetailPage
+    x:Class="SICONDEP.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="{Binding Title}">
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
-    </StackLayout>
-
-</ContentPage>
+    <MasterDetailPage.Master>
+        <NavigationPage Title="Required Foo" Icon="null">
+            <x:Arguments>
+                <ContentPage Title="Menu">
+                    <StackLayout Padding="40">
+                        <Label Text="{Binding UserName, StringFormat='Hello, {0}'}" />
+                        <Button
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Navigation/ViewA?message=Did%20you%20see%20the%20secret%20sauce%3F"
+                            Text="View A" />
+                        <Button
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Navigation/ViewB?message=Told%20you%20Prism%20Rocks%21%21%21"
+                            Text="View B" />
+                        <Button
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Navigation/ViewC?message=Does%20the%20hamburger%20make%20you%20hungry%3F%3F%3F"
+                            Text="View C" />
+                    </StackLayout>
+                </ContentPage>
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Master>
+</MasterDetailPage>

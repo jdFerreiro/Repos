@@ -4,4 +4,36 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
-    prism:ViewModelLocator.AutowireViewModel="True" />
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <Style TargetType="Entry">
+                    <Setter Property="Margin" Value="40,10" />
+                </Style>
+            </ResourceDictionary>
+        </Grid.Resources>
+
+        <StackLayout Grid.Row="1" VerticalOptions="FillAndExpand">
+            <Entry
+                Placeholder="Indique el correo electrónico para acceder."
+                Text="{Binding UserCode}"
+                VerticalOptions="EndAndExpand" />
+            <Entry
+                IsPassword="true"
+                Placeholder="Indique la contraseña."
+                Text="{Binding UserPassword}"
+                VerticalOptions="StartAndExpand" />
+            <StackLayout Orientation="Horizontal">
+                <Button Command="{Binding LoginCommand}" Text="Enviar" />
+                <Button Command="{Binding ClearCommand}" Text="Limpiar" />
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+</ContentPage>    

@@ -35,7 +35,7 @@ namespace SICONDEP.ViewModels
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
-            UserName = Settings.Current.UserName();
+            UserName = UserLoggedViewModel.Name;
         }
     }
 }

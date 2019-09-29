@@ -1,11 +1,12 @@
 ﻿using Prism.Navigation;
+using SICONDEP.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SICONDEP.Services
 {
-    public class AuthenticationService : IAutheticationService
+    public class AuthenticationService : IAuthenticationService
     {
         private INavigationService NavigationService { get; }
 
@@ -19,6 +20,8 @@ namespace SICONDEP.Services
             /*
              *  Incorporar la autheticación de usuario
             */
+
+            UserLoggedViewModel.Name = "Demo User";
 
             return true;
         }
