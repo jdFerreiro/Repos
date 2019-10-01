@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNet.Identity
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            @if (Request.IsAuthenticated)
+            {
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Usuario</a></li>
+            }
+            else
+            {
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="About">Sobre SIMEAD</a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contácto</a></li>
+            }
+        </ul>
+        @Html.Partial("_LoginPartial")
+    </div>
+
