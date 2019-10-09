@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:primitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
+             xmlns:fontawesome="clr-namespace:FontAwesome;assembly=MyZadERP"
+             x:Class="MyZadERP.Views.MenuPage"
+             Title="Menu">
+    
+    <StackLayout VerticalOptions="FillAndExpand">
+        <StackLayout BackgroundColor="Black" HeightRequest="150">
+            <primitives:RadBorder HorizontalOptions="Center" CornerRadius="75" BorderThickness="3" BorderColor="Orange" BackgroundColor="White" Margin="0,20,0,0">
+                <Image Source="ic_account_circle_black_18dp" WidthRequest="50" HeightRequest="50" />
+            </primitives:RadBorder>
+            <Label FontFamily="{StaticResource BebasNeueRegular}" Text="{Binding UserInfo.FullName}" TextColor="White" HorizontalOptions="Center"> </Label>
+            <Label FontFamily="{StaticResource HelveticaLTStandard}" Text="{Binding UserInfo.TecnicoEmail}" TextColor="White" FontSize="Small" Margin="0,3,0,0" HorizontalTextAlignment="Center"></Label>
+        </StackLayout>
+        <ListView x:Name="ListViewMenu" ItemsSource="{Binding MenuItems}"  Margin="0,0,0,0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10">
+                            <StackLayout Orientation="Horizontal">
+                                <Label FontFamily="{StaticResource MaterialFontFamily}" Text="{Binding Image}" TextColor="White" FontSize="Large" Margin="0,3,0,0"></Label>
+                                <Label FontFamily="{StaticResource HelveticaLTStandard}" Text="{Binding Title}" FontSize="Medium"/>
+                            </StackLayout>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>

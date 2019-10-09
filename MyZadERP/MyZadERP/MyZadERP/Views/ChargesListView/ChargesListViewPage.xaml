@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="MyZadERP.Views.ChargesListView.ChargesListView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fabControl="clr-namespace:Refractored.FabControl;assembly=Refractored.FabControl"
+    xmlns:local="clr-namespace:MyZadERP.Views.ChargesListView"
+    xmlns:loginScreen="clr-namespace:MyZadERP.Views.LoginScreen;assembly=MyZadERP"
+    xmlns:primitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
+    xmlns:telerikDataControls="clr-namespace:Telerik.XamarinForms.DataControls;assembly=Telerik.XamarinForms.DataControls"
+    xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
+    xmlns:telerikListView="clr-namespace:Telerik.XamarinForms.DataControls.ListView;assembly=Telerik.XamarinForms.DataControls"
+    Title="Mis Imputaciones"
+    BackgroundColor="Green">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            x:Name="ItemNew"
+            Clicked="ItemNew_OnClicked"
+            Icon="ic_alarm_add_white_18dp" />
+    </ContentPage.ToolbarItems>
+
+    <primitives:RadPopup.Popup>
+        <primitives:RadPopup
+            x:Name="popCustomSearch"
+            AnimationDuration="500"
+            AnimationType="Zoom"
+            IsModal="True"
+            OutsideBackgroundColor="#6F000000"
+            Placement="Center">
+            <primitives:RadBorder BackgroundColor="White" CornerRadius="8">
+                <Grid Padding="20" WidthRequest="280">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="15" />
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Image
+                        x:Name="imgClose"
+                        Grid.Row="0"
+                        HorizontalOptions="End"
+                        Source="close.png">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="CloseSearchParametersPopup" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <StackLayout Grid.Row="1" Orientation="Horizontal">
+                        <Label
+                            FontFamily="{StaticResource BebasNeueRegular}"
+                            FontSize="Large"
+                            HorizontalOptions="Start"
+                            Text="Búsqueda" />
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="2" Orientation="Horizontal">
+                        <telerikInput:RadEntry
+                            FontFamily="{StaticResource BebasNeueRegular}"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{Binding Descripcion}"
+                            WatermarkText="Descripción" />
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="3" Orientation="Horizontal">
+                        <Label
+                            FontFamily="{StaticResource BebasNeueRegular}"
+                            FontSize="Small"
+                            HorizontalOptions="Start"
+                            Text="Fecha Inicio" />
+                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                            <Label
+                                Margin="0,20,5,5"
+                                FontFamily="{StaticResource MaterialFontFamily}"
+                                FontSize="Large"
+                                HorizontalOptions="Start"
+                                Text="&#xf0ed;" />
+                            <DatePicker
+                                x:Name="dtFechaInicio"
+                                Date="{Binding FechaInicioFiltro}"
+                                FontFamily="{StaticResource HelveticaLTStandard}"
+                                FontSize="Medium"
+                                Format="dd/MM/yyyy"
+                                HorizontalOptions="FillAndExpand" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Grid.Row="4" Orientation="Horizontal">
+                        <Label
+                            FontFamily="{StaticResource BebasNeueRegular}"
+                            FontSize="Small"
+                            HorizontalOptions="Start"
+                            Text="Fecha Final" />
+                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                            <Label
+                                Margin="0,20,5,5"
+                                FontFamily="{StaticResource MaterialFontFamily}"
+                                FontSize="Large"
+                                HorizontalOptions="Start"
+                                Text="&#xf0ed;" />
+                            <DatePicker
+                                x:Name="dtFechaFinal"
+                                Date="{Binding FechaFinalFiltro}"
+                                FontFamily="{StaticResource HelveticaLTStandard}"
+                                FontSize="Medium"
+                                Format="dd/MM/yyyy"
+                                HorizontalOptions="FillAndExpand" />
+                        </StackLayout>
+                    </StackLayout>
+                    <telerikInput:RadButton
+                        x:Name="btnBuscar"
+                        Grid.Row="5"
+                        Margin="0,20,0,0"
+                        BackgroundColor="#0054B8"
+                        Clicked="BtnBuscar_Clicked"
+                        CornerRadius="20"
+                        Text="BUSCAR"
+                        TextColor="White" />
+                </Grid>
+            </primitives:RadBorder>
+        </primitives:RadPopup>
+    </primitives:RadPopup.Popup>
+
+    <Grid BackgroundColor="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <telerikInput:RadSegmentedControl
+            x:Name="scPeriod"
+            Grid.Row="0"
+            Margin="5,5,5,5"
+            HorizontalOptions="CenterAndExpand"
+            ItemsSource="{Binding ActionIcons}"
+            SelectedIndex="1"
+            SelectedSegmentBackgroundColor="Orange"
+            SelectionChanged="ScPeriod_OnSelectionChanged"
+            WidthRequest="500" />
+        <ActivityIndicator
+            Grid.Row="1"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            Color="DarkGray" />
+        <telerikDataControls:RadListView
+            x:Name="ListView"
+            Grid.Row="2"
+            BackgroundColor="White"
+            IsLoadOnDemandEnabled="True"
+            ItemsSource="{Binding Items}"
+            LoadOnDemand="ListView_LoadOnDemand"
+            LoadOnDemandBufferItemsCount="{Binding PageSize}"
+            LoadOnDemandMode="Manual"
+            SelectionChanged="ListView_SelectionChanged"
+            SelectionGesture="Tap"
+            SelectionMode="Multiple"
+            VerticalOptions="FillAndExpand">
+            <telerikDataControls:RadListView.LayoutDefinition>
+                <telerikListView:ListViewLinearLayout ItemLength="100" />
+            </telerikDataControls:RadListView.LayoutDefinition>
+            <telerikDataControls:RadListView.HeaderTemplate>
+                <DataTemplate>
+                    <StackLayout
+                        BackgroundColor="Green"
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="{Binding NoData}"
+                        Orientation="Horizontal" />
+                </DataTemplate>
+            </telerikDataControls:RadListView.HeaderTemplate>
+            <telerikDataControls:RadListView.SelectedItemStyle>
+                <telerikListView:ListViewItemStyle
+                    BackgroundColor="#F7F6F3"
+                    BorderColor="Orange"
+                    BorderWidth="3" />
+            </telerikDataControls:RadListView.SelectedItemStyle>
+            <telerikDataControls:RadListView.ItemStyle>
+                <telerikListView:ListViewItemStyle
+                    BorderColor="DarkGray"
+                    BorderLocation="Bottom"
+                    BorderWidth="2" />
+            </telerikDataControls:RadListView.ItemStyle>
+            <telerikDataControls:RadListView.ItemTemplate>
+                <DataTemplate>
+                    <telerikListView:ListViewTemplateCell>
+                        <telerikListView:ListViewTemplateCell.View>
+                            <Grid HeightRequest="250">
+                                <Grid>
+                                    <Grid.Margin>
+                                        <OnPlatform x:TypeArguments="Thickness">
+                                            <On Platform="Android" Value="16" />
+                                        </OnPlatform>
+                                    </Grid.Margin>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        FontFamily="{StaticResource BebasNeueRegular}"
+                                        FontSize="Medium"
+                                        LineBreakMode="WordWrap"
+                                        MaxLines="2"
+                                        Text="{Binding Descripcion}"
+                                        TextColor="Black" />
+                                    <StackLayout
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        HorizontalOptions="FillAndExpand"
+                                        Orientation="Horizontal">
+                                        <StackLayout
+                                            x:Name="Layout_1"
+                                            HorizontalOptions="FillAndExpand"
+                                            Orientation="Horizontal">
+                                            <Label
+                                                FontFamily="{StaticResource MaterialFontFamily}"
+                                                FontSize="Large"
+                                                HorizontalOptions="Start"
+                                                Text="&#xf0ed;"
+                                                TextColor="DarkGray" />
+                                            <Label
+                                                Margin="0,3,0,0"
+                                                FontFamily="{StaticResource BebasNeueRegular}"
+                                                FontSize="Small"
+                                                HorizontalOptions="FillAndExpand"
+                                                Text="{Binding Fecha, StringFormat='{0:dd.MM.yyyy}'}" />
+                                        </StackLayout>
+                                        <StackLayout
+                                            x:Name="Layout_2"
+                                            HorizontalOptions="FillAndExpand"
+                                            Orientation="Horizontal">
+                                            <Label
+                                                FontFamily="{StaticResource MaterialFontFamily}"
+                                                FontSize="Large"
+                                                HorizontalOptions="Start"
+                                                Text="&#xf150;"
+                                                TextColor="DarkGray" />
+                                            <Label
+                                                Margin="0,3,0,0"
+                                                FontFamily="{StaticResource BebasNeueRegular}"
+                                                FontSize="Small"
+                                                HorizontalOptions="FillAndExpand"
+                                                Text="{Binding Horas}" />
+                                        </StackLayout>
+                                        <StackLayout
+                                            x:Name="Layout_3"
+                                            HorizontalOptions="FillAndExpand"
+                                            Orientation="Horizontal">
+                                            <Label
+                                                FontFamily="{StaticResource MaterialFontFamily}"
+                                                FontSize="Large"
+                                                HorizontalOptions="Start"
+                                                Text="&#xf5b5;"
+                                                TextColor="DarkGray" />
+                                            <Label
+                                                Margin="0,3,0,0"
+                                                FontFamily="{StaticResource BebasNeueRegular}"
+                                                FontSize="Small"
+                                                HorizontalOptions="FillAndExpand"
+                                                Text="{Binding CodigoPedido}" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </Grid>
+                            </Grid>
+                        </telerikListView:ListViewTemplateCell.View>
+                    </telerikListView:ListViewTemplateCell>
+                </DataTemplate>
+            </telerikDataControls:RadListView.ItemTemplate>
+            <telerikDataControls:RadListView.FooterTemplate>
+                <DataTemplate>
+                    <StackLayout
+                        BackgroundColor="DarkGray"
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="{Binding ShowFooter}"
+                        Orientation="Horizontal">
+                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                            <Label
+                                Margin="50,3,0,0"
+                                FontAttributes="Bold"
+                                FontFamily="{StaticResource BebasNeueRegular}"
+                                FontSize="Medium"
+                                HorizontalTextAlignment="End"
+                                Text="Total Horas Imputadas"
+                                TextColor="Black" />
+                            <Label
+                                Margin="25,3,0,0"
+                                FontAttributes="Bold"
+                                FontFamily="{StaticResource BebasNeueRegular}"
+                                FontSize="Medium"
+                                HorizontalTextAlignment="Center"
+                                Text="{Binding TotalHours}"
+                                TextColor="Black" />
+                        </StackLayout>
+                    </StackLayout>
+                </DataTemplate>
+            </telerikDataControls:RadListView.FooterTemplate>
+            <telerikDataControls:RadListView.LoadOnDemandItemTemplate>
+                <DataTemplate>
+                    <Grid BackgroundColor="LightGray" IsVisible="{Binding ShowMoreData}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            FontFamily="{StaticResource BebasNeueRegular}"
+                            FontSize="24"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Mostrar más.."
+                            TextColor="White"
+                            VerticalOptions="FillAndExpand" />
+                    </Grid>
+                </DataTemplate>
+            </telerikDataControls:RadListView.LoadOnDemandItemTemplate>
+            <!--<telerikDataControls:RadListView.ItemSwipeContentTemplate>
+                <DataTemplate>
+                    <Grid Margin="0"
+                    Padding="0"
+                    ColumnSpacing="0"
+                    RowSpacing="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="70" />
+                        </Grid.ColumnDefinitions>
+                        <Label BackgroundColor="#2474d2"
+                    HorizontalTextAlignment="Center"
+                    Text="Mark as read"
+                    TextColor="White"
+                    VerticalTextAlignment="Center"
+                    />
+                        <Label Grid.Column="2"
+                    BackgroundColor="Red"
+                    HorizontalTextAlignment="Center"
+                    Text="delete"
+                    TextColor="White"
+                    VerticalTextAlignment="Center"
+                    />
+                    </Grid>
+                </DataTemplate>
+            </telerikDataControls:RadListView.ItemSwipeContentTemplate>-->
+            <!--<telerikDataControls:RadListView.LoadingOnDemandItemTemplate>
+                <DataTemplate>
+                    <Grid BackgroundColor="Green">
+                        <Label FontSize="24" HorizontalOptions="Center" Text="Loading..." TextColor="White" />
+                    </Grid>
+                </DataTemplate>
+            </telerikDataControls:RadListView.LoadingOnDemandItemTemplate>-->
+        </telerikDataControls:RadListView>
+    </Grid>
+</ContentPage>

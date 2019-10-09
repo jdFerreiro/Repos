@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:telerikGrid="clr-namespace:Telerik.XamarinForms.DataGrid;assembly=Telerik.XamarinForms.DataGrid"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
+             xmlns:telerikDataControls="clr-namespace:Telerik.XamarinForms.DataControls;assembly=Telerik.XamarinForms.DataControls"
+             xmlns:telerikListView="clr-namespace:Telerik.XamarinForms.DataControls.ListView;assembly=Telerik.XamarinForms.DataControls"
+             xmlns:local="clr-namespace:MyZadERP.Views.EditChargues"
+             xmlns:numericInput="clr-namespace:Telerik.XamarinForms.Input.NumericInput;assembly=Telerik.XamarinForms.Input"
+             xmlns:primitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
+             Title="Imputación de Horas"
+             x:Class="MyZadERP.Views.EditChargues.EditChargues">
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="ItemClose" Text="+" Icon="close.png"/>
+    </ContentPage.ToolbarItems>-->
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ControlTemplate x:Key="HeaderControlTemplate">
+                <Grid BackgroundColor="Transparent">
+                    <BoxView IsVisible="{TemplateBinding IsSelected}" BackgroundColor="Orange" VerticalOptions="End" HeightRequest="3"/>
+                    <StackLayout Orientation="Horizontal" Margin="0, 0, 0, 8">
+                        <Label Text="{TemplateBinding Text}" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Medium" TextColor="DarkGray" HorizontalTextAlignment="Start"/>
+                        <Label Text="" FontFamily="{StaticResource BebasNeueRegular}" TextColor="LightBlue" IsVisible="{TemplateBinding IsSelected}" VerticalTextAlignment="Center" FontSize="Medium"/>
+                    </StackLayout>
+                </Grid>
+            </ControlTemplate>
+
+            <Style TargetType="numericInput:NumericInputButton" Class="CustomStyle">
+                <Setter Property="BorderRadius" Value="5" />
+                <Setter Property="BorderColor" Value="Orange" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="TextColor" Value="DarkGray" />
+                <Setter Property="BackgroundColor" Value="White" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView Orientation="Vertical">
+        <StackLayout Orientation="Vertical" Padding="20,15,20,15">
+            <primitives:RadTabView x:Name="tabView">
+                <primitives:RadTabView.Items>
+                    <primitives:TabViewItem>
+                        <primitives:TabViewItem.Header>
+                            <primitives:TabViewHeaderItem Text="General" ControlTemplate="{StaticResource HeaderControlTemplate}" />
+                        </primitives:TabViewItem.Header>
+                        <primitives:TabViewItem.Content>
+                            <StackLayout Orientation="Vertical" Margin="0,30,0,0" Spacing="25">
+                                <Label Text="Pedido" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small"></Label>
+                                <telerikInput:RadAutoCompleteView Text="{Binding PedidoSelected, Mode=TwoWay}" SuggestMode="SuggestAppend" SuggestionItemSelected="Pedido_SuggestionItemSelected"  x:Name="Pedido" CompletionMode="Contains" ItemsSource="{ Binding Pedidos }" TextSearchPath="Descripcion" Watermark="Buscar aqui..." FontFamily="{StaticResource HelveticaLTStandard}" FontSize="14" NoResultsMessage="No existen coincidencias" SuggestionViewBackgroundColor="#F7F6F3" BorderColor="Orange" SuggestionItemTextColor="Black" DisplayMode="Plain" Focused="Pedido_Focused" TextChanged="Pedido_TextChanged" />
+
+                                <!--<Label Text="Amplicación" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small"></Label>
+                                <telerikInput:RadAutoComplete x:Name="Amplicacion" CompletionMode="Contains" ItemsSource="{Binding Imputacion.Pedidos}" TextSearchPath="Description" BorderColor="Orange" FontFamily="{StaticResource HelveticaLTStandard}" />-->
+
+                                <Label Text="Capitulo" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small"></Label>
+                                <telerikInput:RadAutoCompleteView Text="{Binding CapituloSelected, Mode=TwoWay}" SuggestMode="SuggestAppend"  x:Name="Capitulo" CompletionMode="Contains" ItemsSource="{ Binding Capitulo }" TextSearchPath="Descripcion" Watermark="Buscar aqui..." FontFamily="{StaticResource HelveticaLTStandard}" FontSize="14" NoResultsMessage="No existen coincidencias" SuggestionItemSelected="Capitulo_SuggestionItemSelected"  SuggestionViewBackgroundColor="#F7F6F3" BorderColor="Orange" SuggestionItemTextColor="Black" DisplayMode="Plain" Focused="Capitulo_Focused" TextChanged="Capitulo_TextChanged" />
+
+                                <Label Text="Partida" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small"></Label>
+                                <telerikInput:RadAutoCompleteView Text="{Binding PartidaSelected, Mode=TwoWay}" SuggestMode="SuggestAppend"  x:Name="Partida" CompletionMode="Contains" ItemsSource="{ Binding Partida }" TextSearchPath="Descripcion" Watermark="Buscar aqui..." FontFamily="{StaticResource HelveticaLTStandard}" FontSize="14" NoResultsMessage="No existen coincidencias" SuggestionItemSelected="Partida_SuggestionItemSelected"  SuggestionViewBackgroundColor="#F7F6F3" BorderColor="Orange" SuggestionItemTextColor="Black" DisplayMode="Plain" Focused="Partida_Focused" TextChanged="Partida_TextChanged" />
+
+                                <Label Text="Fase" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small"></Label>
+                                <telerikInput:RadAutoCompleteView Text="{Binding FaseSelected, Mode=TwoWay}" x:Name="Fase" CompletionMode="Contains" ItemsSource="{ Binding Fase }" TextSearchPath="Descripcion" Watermark="Buscar aqui..." FontFamily="{StaticResource HelveticaLTStandard}" FontSize="14" NoResultsMessage="No existen coincidencias" SuggestionViewBackgroundColor="#F7F6F3" BorderColor="Orange" SuggestionItemTextColor="Black" DisplayMode="Plain" Focused="Fase_Focused" SuggestionItemSelected="Fase_SuggestionItemSelected" TextChanged="Fase_TextChanged" />
+
+                                <!--<Label Text="Mediciones" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small"></Label>
+                                <telerikInput:RadAutoCompleteView SuggestMode="SuggestAppend" x:Name="Mediciones" CompletionMode="Contains" ItemsSource="{ Binding Mediciones }" TextSearchPath="Descripcion" Watermark="Buscar aqui..." FontFamily="{StaticResource HelveticaLTStandard}" FontSize="14" NoResultsMessage="No existen coincidencias" SuggestionViewBackgroundColor="#F7F6F3" BorderColor="Orange" SuggestionItemTextColor="Black" DisplayMode="Plain" Focused="Mediciones_Focused"   />-->
+
+                                <Label Text="Comentarios" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small"></Label>
+                                <telerikInput:RadEntry x:Name="Comentario" Text="{Binding Comentario}" FontFamily="{StaticResource HelveticaLTStandard}" HorizontalOptions="FillAndExpand" FontSize="14" />
+
+                                <Label Text="Fecha" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Small" HorizontalOptions="FillAndExpand"></Label>
+                                <DatePicker x:Name="FechaRegistro" Date="{Binding Fecha}" FontSize="Default" FontFamily="{StaticResource HelveticaLTStandard}" HorizontalOptions="FillAndExpand" Format="dd/MM/yyyy"></DatePicker>
+                            </StackLayout>
+                        </primitives:TabViewItem.Content>
+                    </primitives:TabViewItem>
+                    <primitives:TabViewItem>
+                        <primitives:TabViewItem.Header>
+                            <primitives:TabViewHeaderItem Text="Horas" ControlTemplate="{StaticResource HeaderControlTemplate}" />
+                        </primitives:TabViewItem.Header>
+                        <primitives:TabViewItem.Content>
+                            <StackLayout Orientation="Vertical" Margin="0,30,0,0" Spacing="25">
+
+                                <Label Text="Horas del Dia" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Small" HorizontalOptions="FillAndExpand"></Label>
+                                <telerikInput:RadNumericInput x:Name="HorasDia"  StyleClass="CustomStyle" ValueChanged="HorasDia_ValueChanged" Value="{Binding HorasDia}" Minimum="0" />
+
+                                <Label Text="Medicion del Dia" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Small" HorizontalOptions="FillAndExpand"></Label>
+                                <telerikInput:RadNumericInput x:Name="MedicionDia" StyleClass="CustomStyle" ValueChanged="MedicionDia_ValueChanged" Value="{Binding MedicionDia}" Minimum="0"  />
+
+                                <!--<Label Text="Med. Total Real Ejec." FontFamily="{StaticResource BebasNeueRegular}" FontSize="Small" HorizontalOptions="FillAndExpand"></Label>
+                                <telerikInput:RadNumericInput Maximum="8" StyleClass="CustomStyle"  />
+
+                                <Label Text="Horas Objetivo" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Small" HorizontalOptions="FillAndExpand"></Label>
+                                <telerikInput:RadNumericInput Maximum="8" StyleClass="CustomStyle" />
+
+                                <Label Text="Horas Acumuladas" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Small" HorizontalOptions="FillAndExpand"></Label>
+                                <telerikInput:RadNumericInput Maximum="8" StyleClass="CustomStyle" />
+
+                                <Label Text="Horas Restantes" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Small" HorizontalOptions="FillAndExpand"></Label>
+                                <telerikInput:RadNumericInput Maximum="8" StyleClass="CustomStyle" />
+
+                                <Label Text="Medición Objetivo" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Small" HorizontalOptions="FillAndExpand"></Label>
+                                <telerikInput:RadNumericInput Maximum="8" StyleClass="CustomStyle" />
+
+                                <Label Text="Medición Acumuladas" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Small" HorizontalOptions="FillAndExpand"></Label>
+                                <telerikInput:RadNumericInput Maximum="8" StyleClass="CustomStyle" />
+
+                                <Label Text="Medición Restantes" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Small" HorizontalOptions="FillAndExpand"></Label>
+                                <telerikInput:RadNumericInput Maximum="8" StyleClass="CustomStyle" />-->
+
+                            </StackLayout>
+                        </primitives:TabViewItem.Content>
+                    </primitives:TabViewItem>
+                    <primitives:TabViewItem>
+                        <primitives:TabViewItem.Header>
+                            <primitives:TabViewHeaderItem Text="Inf. Adicional"  ControlTemplate="{StaticResource HeaderControlTemplate}" />
+                        </primitives:TabViewItem.Header>
+                        <primitives:TabViewItem.Content>
+                            <StackLayout Orientation="Vertical" Margin="0,30,0,0" Spacing="25">
+
+                                <Label Text="Herramienta 1" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small"></Label>
+                                <telerikInput:RadAutoCompleteView Text="{Binding Herramienta1Selected, Mode=TwoWay}" SuggestMode="SuggestAppend"  x:Name="Herramienta1" CompletionMode="Contains" ItemsSource="{ Binding Herramienta1 }" TextSearchPath="Descripcion" Watermark="Buscar aqui..." FontFamily="{StaticResource HelveticaLTStandard}" FontSize="14" NoResultsMessage="No existen coincidencias" SuggestionViewBackgroundColor="#F7F6F3" BorderColor="Orange" SuggestionItemTextColor="Black" DisplayMode="Plain" Focused="Herramienta1_Focused"  />
+
+                                <Label Text="Herramienta 2" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small"></Label>
+                                <telerikInput:RadAutoCompleteView Text="{Binding Herramienta2Selected, Mode=TwoWay}" SuggestMode="SuggestAppend"  x:Name="Herramienta2" CompletionMode="Contains" ItemsSource="{ Binding Herramienta2 }" TextSearchPath="Descripcion" Watermark="Buscar aqui..." FontFamily="{StaticResource HelveticaLTStandard}" FontSize="14" NoResultsMessage="No existen coincidencias" SuggestionViewBackgroundColor="#F7F6F3" BorderColor="Orange" SuggestionItemTextColor="Black" DisplayMode="Plain" Focused="Herramienta2_Focused" />
+
+                                <Label Text="Herramienta 3" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small"></Label>
+                                <telerikInput:RadAutoCompleteView Text="{Binding Herramienta3Selected, Mode=TwoWay}" SuggestMode="SuggestAppend"  x:Name="Herramienta3" CompletionMode="Contains" ItemsSource="{ Binding Herramienta3 }" TextSearchPath="Descripcion" Watermark="Buscar aqui..." FontFamily="{StaticResource HelveticaLTStandard}" FontSize="14" NoResultsMessage="No existen coincidencias" SuggestionViewBackgroundColor="#F7F6F3" BorderColor="Orange" SuggestionItemTextColor="Black" DisplayMode="Plain" Focused="Herramienta3_Focused" />
+
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                                        <Label Text="Kilometros (Kms)" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Small" HorizontalOptions="FillAndExpand"></Label>
+                                        <telerikInput:RadEntry Text="{Binding Kilometros}" Keyboard="Numeric" FontFamily="{StaticResource HelveticaLTStandard}" FontSize="14" HorizontalTextAlignment="Center"></telerikInput:RadEntry>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                                        <Label Text="Euros €" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Small" HorizontalOptions="FillAndExpand" ></Label>
+                                        <telerikInput:RadEntry Text="{Binding Euros}" Keyboard="Numeric" FontFamily="{StaticResource HelveticaLTStandard}" FontSize="14" HorizontalTextAlignment="Center" ></telerikInput:RadEntry>
+                                    </StackLayout>
+                                </StackLayout>
+
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout VerticalOptions="Start" Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="0,5,0,0" >
+                                        <primitives:RadCheckBox CheckedColor="Orange" IsChecked="{Binding Dieta, Mode=TwoWay}"/>
+                                        <Label Text="Dieta" FontFamily="{StaticResource  HelveticaLTStandard}" FontSize="Small"  Margin="0,5,0,0"/>
+                                    </StackLayout>
+                                </StackLayout>
+
+                                <!--<StackLayout Orientation="Horizontal">
+                               <Label Text="Descripcion" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small" Margin="0,5,0,0"></Label>
+                               <telerikInput:RadEntry Text="{Binding Descripcion}" FontFamily="{StaticResource HelveticaLTStandard}" />-->
+
+                                <!--<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                    <StackLayout VerticalOptions="Start" Orientation="Horizontal" HorizontalOptions="FillAndExpand" Margin="0,5,0,0" >
+                                       <primitives:RadCheckBox CheckedColor="Orange" IsChecked="{Binding Imputacion.Dieta, Mode=TwoWay}"/>
+                                       <Label Text="Dieta" FontFamily="{StaticResource  HelveticaLTStandard}" FontSize="Small"  Margin="0,5,0,0"/>
+                                   </StackLayout>
+
+                                    <StackLayout VerticalOptions="End" Orientation="Horizontal" HorizontalOptions="EndAndExpand" Margin="0,5,0,0" >
+                                       <primitives:RadCheckBox CheckedColor="Orange" IsChecked="{Binding Imputacion.Incidencia, Mode=TwoWay}"/>
+                                       <Label Text="Incidencia" FontFamily="{StaticResource  HelveticaLTStandard}" FontSize="Small" Margin="0,5,0,0" />
+                                   </StackLayout>
+                                </StackLayout>
+
+                               <StackLayout Orientation="Vertical" Margin="0,10,0,0">
+                                   <Label Text="Materiales" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small"></Label>
+                                   <telerikInput:RadEntry Text="{Binding Imputacion.Materiales}" FontFamily="{StaticResource HelveticaLTStandard}" />
+
+                                   <Label Text="Importe" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small"></Label>
+                                   <telerikInput:RadEntry Text="{Binding Imputacion.Importe}" FontFamily="{StaticResource HelveticaLTStandard}" />
+
+                                   <Label Text="Proveedor" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small"></Label>
+                                    <Picker ItemsSource="{Binding Imputacion.Proveedor}" ItemDisplayBinding="{Binding Description}" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Small"></Picker>
+
+                                   <Label Text="Incidencia" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="Start" FontSize="Small"></Label>
+                                    <Picker ItemsSource="{Binding Imputacion.TipoIncidencia}" ItemDisplayBinding="{Binding Description}" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Small"></Picker>
+
+                                </StackLayout>-->
+                            </StackLayout>
+                        </primitives:TabViewItem.Content>
+                    </primitives:TabViewItem>
+                </primitives:RadTabView.Items>
+            </primitives:RadTabView>
+            <telerikInput:RadButton x:Name="btnGuardar" Grid.Row="5" Text="INSERTAR IMPUTACION" CornerRadius="20" Margin="0,20,0,0" BackgroundColor="#0054B8" TextColor="White" Clicked="BtnGuardar_Clicked" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

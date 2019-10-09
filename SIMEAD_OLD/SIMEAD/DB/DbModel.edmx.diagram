@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ba8e7db6526e4660b1c9f792def59686" Name="Diagram1">
+        <EntityTypeShape EntityType="SIMEADModel.aspnet_Applications" Width="1.5" PointX="7" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SIMEADModel.aspnet_Membership" Width="1.5" PointX="4.875" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SIMEADModel.aspnet_Paths" Width="1.5" PointX="5" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SIMEADModel.aspnet_PersonalizationAllUsers" Width="1.5" PointX="2.625" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SIMEADModel.aspnet_Profile" Width="1.5" PointX="0.5" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SIMEADModel.aspnet_SchemaVersions" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SIMEADModel.aspnet_Users" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SIMEADModel.aspnet_WebEvent_Events" Width="1.5" PointX="11" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="SIMEADModel.FK__aspnet_Pa__Appli__123EB7A3" ManuallyRouted="false" />
+        <AssociationConnector Association="SIMEADModel.FK__aspnet_Me__UserI__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="SIMEADModel.FK__aspnet_Pe__PathI__17F790F9" ManuallyRouted="false" />
+        <AssociationConnector Association="SIMEADModel.FK__aspnet_Pr__UserI__75A278F5" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SIMEADModel.aspnet_Roles" Width="1.5" PointX="0.75" PointY="5.625" />
+        <EntityTypeShape EntityType="SIMEADModel.Roles_Applications" Width="1.5" PointX="1.25" PointY="1.75" />
+        <AssociationConnector Association="SIMEADModel.aspnet_UsersInRoles" />
+        <AssociationConnector Association="SIMEADModel.FK_Roles_Applications_aspnet_Applications" />
+        <AssociationConnector Association="SIMEADModel.FK_Roles_Applications_aspnet_Roles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

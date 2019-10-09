@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyZadERP.App">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--Global Styles-->
+            <Color x:Key="NavigationPrimary">#2196F3</Color>
+
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="Black" />
+                <Setter Property="BarTextColor" Value="White" />
+            </Style>
+
+            <OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
+                <!--<On Platform="iOS" Value="Material Design Icons" />-->
+                <On Platform="Android" Value="materialdesignicons-webfont.ttf#Material Design Icons" />
+                <!--<On Platform="UWP" Value="Assets/Fonts/materialdesignicons-webfont.ttf#Material Design Icons" />-->
+            </OnPlatform>
+
+            <OnPlatform x:Key="BebasNeueRegular" x:TypeArguments="x:String">
+                <!--<On Platform="iOS" Value="Material Design Icons" />-->
+                <On Platform="Android" Value="BebasNeue-Regular.otf#BebasNeue Regular" />
+                <!--<On Platform="UWP" Value="Assets/Fonts/materialdesignicons-webfont.ttf#Material Design Icons" />-->
+            </OnPlatform>
+
+            <OnPlatform x:Key="HelveticaLTStandard" x:TypeArguments="x:String">
+                <!--<On Platform="iOS" Value="Material Design Icons" />-->
+                <On Platform="Android" Value="HelveticaLTStd-Cond.otf#Helvetica LTStd Cond" />
+                <!--<On Platform="UWP" Value="Assets/Fonts/materialdesignicons-webfont.ttf#Material Design Icons" />-->
+            </OnPlatform>
+
+
+        </ResourceDictionary>
+
+    </Application.Resources>
+    
+</Application>

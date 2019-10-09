@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
+             xmlns:local="clr-namespace:MyZadERP.Views.LoginScreen"
+             xmlns:primitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
+             xmlns:fontawesome="clr-namespace:FontAwesome"
+             x:Class="MyZadERP.Views.LoginScreen.Views.LoginView">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+
+
+    <ScrollView Orientation="Vertical">
+       
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackLayout Margin="10,0">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="Gray"></ActivityIndicator>
+                <Image Source="zadecon.jpg"></Image>
+                <Label Text="Ingresa tu Cuenta" FontFamily="{StaticResource BebasNeueRegular}" FontSize="Large" Style="{StaticResource TitleLabelStyle}" />
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="&#xf643;" FontFamily="{StaticResource MaterialFontFamily}" FontSize="Large" Margin="0,20,5,5" HorizontalOptions="Start" />
+                    <telerikInput:RadEntry Text="{Binding Username, Mode=TwoWay}" WatermarkText="Usuario" Style="{StaticResource LoginEntryStyle}" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center" />
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="&#xf341;" FontFamily="{StaticResource MaterialFontFamily}" FontSize="Large" Margin="0,20,5,5"  HorizontalOptions="Start" />
+                    <telerikInput:RadEntry Text="{Binding Password, Mode=TwoWay}" IsPassword="True" WatermarkText="Password" Style="{StaticResource LoginEntryStyle}" FontFamily="{StaticResource BebasNeueRegular}" HorizontalOptions="FillAndExpand" VerticalTextAlignment="Center"   />
+                </StackLayout>
+                
+                <telerikInput:RadButton Text="ENTRAR" Command="{Binding LoginCommand}" CommandParameter="{x:Static local:LoginType.Normal}" Style="{StaticResource ActionLoginButtonStyle}" />
+                <StackLayout VerticalOptions="CenterAndExpand" Orientation="Horizontal" HorizontalOptions="Center" Margin="0,50,0,0" >
+                    <primitives:RadCheckBox CheckedColor="Orange" IsChecked="{Binding SavePassword, Mode=TwoWay}"/>
+                    <Label Text="Recordar Contraseña" FontFamily="{StaticResource  HelveticaLTStandard}" FontSize="Medium" />
+                </StackLayout>
+
+                <StackLayout Orientation="Vertical" Margin="0,50,0,0">
+                    <BoxView BackgroundColor="{StaticResource Orange}" HeightRequest="10"></BoxView>
+                </StackLayout>
+
+                <telerikInput:RadButton Text="Olvidaste tu Clave?" Command="{Binding GoToViewCommand}" CommandParameter="{x:Static local:ViewType.PasswordResetView}" Style="{StaticResource SecondaryActionButtonStyle}" FontAttributes="None" IsVisible="false" CornerRadius="20"/>
+            </StackLayout>
+        </Grid>
+    </ScrollView>
+</ContentView>
