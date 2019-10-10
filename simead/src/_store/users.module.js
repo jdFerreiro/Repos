@@ -1,4 +1,4 @@
-import { userService } from "../_services";
+import { userService } from '../_services';
 
 const state = {
   all: {}
@@ -6,24 +6,24 @@ const state = {
 
 const actions = {
   getAll({ commit }) {
-    commit("getAllRequest");
+    commit('getAllRequest');
 
     userService
       .getAll()
       .then(
-        users => commit("getAllSuccess", users),
-        error => commit("getAllFailure", error)
+        users => commit('getAllSuccess', users),
+        error => commit('getAllFailure', error)
       );
   },
 
   delete({ commit }, id) {
-    commit("deleteRequest", id);
+    commit('deleteRequest', id);
 
     userService
       .delete(id)
       .then(
-        user => commit("deleteSuccess", id),
-        error => commit("deleteFailure", { id, error: error.tostring() })
+        user => commit('deleteSuccess', id),
+        error => commit('deleteFailure', { id, error: error.tostring() })
       );
   }
 };

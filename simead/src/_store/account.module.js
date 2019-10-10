@@ -5,10 +5,10 @@ import { stat } from 'fs';
 const user = JSON.parse(localStorage.getItem('user'));
 const state = user
     ? { status: { loggedIn: true }, user }
-    : { status: {}, user: null};
+    : { status: {}, user: null };
 
-const actions = { 
-    login({ dispatch, commit}, { username, password}) {
+const actions = {
+    login({ dispatch, commit }, { username, password }) {
         commit('loginRequest', { username });
 
         userService.login(username, password)
@@ -16,10 +16,10 @@ const actions = {
                 commit('loginSuccess', user);
                 router.push('/');
             },
-            error => {
-                commit('loginFailure', error);
-                dispatch('alert/error', error, { root: true});
-            });
+                error => {
+                    commit('loginFailure', error);
+                    dispatch('alert/error', error, { root: true });
+                });
     },
     logout({ commit }) {
         userService.logout();
@@ -33,13 +33,13 @@ const actions = {
                 commit('registerSuccess', user);
                 router.push('/login');
                 setTimeout(() => {
-                    dispatch('alert/success', 'Registro completado', {root; true});
+                    dispatch('alert/success', 'Registro completado', { root; true});
                 })
             },
-            error => {
-                commit('registerFailure', error);
-                dispatch('alert/error', error, { root: true});
-            });
+                error => {
+                    commit('registerFailure', error);
+                    dispatch('alert/error', error, { root: true });
+                });
     }
 };
 
@@ -58,7 +58,7 @@ const mutations = {
     },
     logout(state) {
         state.status = {},
-        state.user = null;
+            state.user = null;
     },
     registerRequest(state, user) {
         state.status = { registering: true };

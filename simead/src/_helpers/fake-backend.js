@@ -1,12 +1,12 @@
-import { resolve } from "url";
-import { reject } from "q";
-import { updateSourceFileNode } from "typescript";
+import { resolve } from 'url';
+import { reject } from 'q';
+import { updateSourceFileNode } from 'typescript';
 
 let users = JSON.parse(localStorage.getItem('users')) || [];
 
 export function configureFakeBackend() {
     let realFetch = window.fetch;
-    window.fetch = function (url,opts)  {
+    window.fetch = function (url, opts) {
         return new this.Promise((resolve, reject) => {
             setTimeout(() => {
                 if (url.endsWith('/users/authenticate') && opts.method === 'POST') {
@@ -24,16 +24,16 @@ export function configureFakeBackend() {
                             name: user.name,
                             token: 'fake-jwt-token'
                         }
-                        resolve({ok: true, text: () => this.Promise.resolve(JSON.stringify(responseJson)) });
+                        resolve({ ok: true, text: () => this.Promise.resolve(JSON.stringify(responseJson)) });
                     } else {
-                        reject ('Correo electrónico o contraseña son incorrectos');
+                        reject('Correo electrónico o contraseña son incorrectos');
                     }
                     return;
                 }
 
                 if (url.endsWith('/users') && opts.method === 'GET') {
                     if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
-                        resolve({ ok: true, text () => this.Promise.resolve(JSON.stringify(users))});
+                        resolve({ ok: true, text() => this.Promise.resolve(JSON.stringify(users)) });
                     } else {
                         resolve('Las credenciales no son correctas o el usuario no está autorizado a ingresar');
                     }
@@ -66,7 +66,7 @@ export function configureFakeBackend() {
                     // validation
                     let duplicateUser = users.filter(user => { return user.username === newUser.username; }).length;
                     if (duplicateUser) {
-                        reject('Username "' + newUser.username + '" is already taken');
+                        reject('Username '' + newUser.username + '' is already taken');
                         return;
                     }
 
@@ -109,7 +109,7 @@ export function configureFakeBackend() {
 
                 // pass through any requests not handled above
                 realFetch(url, opts).then(response => resolve(response));
-                
+
             }, 500);
         })
     }
