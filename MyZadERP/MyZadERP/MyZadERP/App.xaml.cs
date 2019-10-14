@@ -6,6 +6,7 @@ using SQLite;
 using System;
 using System.IO;
 using Xamarin.Forms;
+using Android.App.Job;
 
 namespace MyZadERP
 {
@@ -21,7 +22,11 @@ namespace MyZadERP
         public static ViewModels.DTO.UserDTO UserInfo;
         public static SQLiteConnection Connection;
         static MyZapDataBase database;
-
+        public static DateTime StartTime;
+        public static DateTime EndTime;
+        public static JobInfo jobInfo;
+        public static JobInfo.Builder jobBuilder;
+        public static JobScheduler jobScheduler;
 
         public App(string dataBasePath, double screenHeight, double screenWidth)
         {

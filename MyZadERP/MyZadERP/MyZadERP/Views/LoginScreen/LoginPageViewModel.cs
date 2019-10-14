@@ -1,4 +1,10 @@
-﻿using MyZadERP.Views;
+﻿using Android.App.Job;
+using Android.Util;
+using Android.Widget;
+using MyZadERP.Interfaces;
+using MyZadERP.Services;
+using MyZadERP.Views;
+using System;
 using System.Threading.Tasks;
 using Telerik.XamarinForms.Common;
 using Xamarin.Forms;
@@ -135,7 +141,17 @@ namespace MyZadERP.Views.LoginScreen
                     }
                     Application.Current.MainPage = new MainPage();
 
+                    int scheduleResult = App.jobScheduler.Schedule(App.jobInfo);
 
+                    if (scheduleResult != JobScheduler.ResultSuccess)
+                    {
+                        string TAG = "GeoService";
+                        DateTime startTime = DateTime.Now;
+
+                        Log.Debug(TAG, $"Inicia Servicio GeoLocation ejecutado a las {startTime}");
+                        
+                    }
+                    App.StartTime = DateTime.Now;
                     break;
             }
         }

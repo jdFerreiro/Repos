@@ -14,6 +14,7 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using MyZadERP.Interfaces;
 using MyZadERP.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -22,32 +23,24 @@ using Location = Android.Locations.Location;
 namespace MyZadERP.Droid.Services
 {
 
-    [Service(Name = "com.xamarin.samples.downloadscheduler.DownloadJob",
-         Permission = "android.permission.BIND_JOB_SERVICE")]
+    [Service(Exported = true, 
+        Enabled = true,
+        Name = "com.zadesoft.MyZadERP.GeoServices",
+        Permission = "android.permission.BIND_JOB_SERVICE")]
     public class GeoService : JobService
     {
-        //const long ONE_MINUTE = 60 * 1000;
-        //const long FIVE_MINUTES = 5 * ONE_MINUTE;
-
-        //static readonly int RC_LAST_LOCATION_PERMISSION_CHECK = 1000;
-        //static readonly int RC_LOCATION_UPDATES_PERMISSION_CHECK = 1100;
-
-        //bool _isRequestingLocationUpdates;
-
-        //private Bundle _bundle;
-        //private string _latitude;
-        //private string _longitude;
-        //private string _provider;
-
         LocationManager _locationManager;
         static readonly string TAG = "X:" + typeof(GeoService).Name;
-        static readonly int TimerWait = 10000;
+        static readonly int TimerWait = 30000;
         Timer timer;
         DateTime startTime;
         bool _isStarted = false;
 
         public override bool OnStartJob(JobParameters @params)
         {
+            App.EndTime = DateTime.Now;
+            TimeSpan diffTime = App.EndTime - App.StartTime;
+
             Task.Run(() =>
             {
 

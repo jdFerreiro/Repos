@@ -61,23 +61,31 @@ namespace MyZadERP.Droid
 
                 /* Inicio de JobScheduler */
 
-                JobInfo.Builder jobBuilder = this.CreateJobBuilderUsingJobId<GeoService>(1);
-                jobBuilder.SetPeriodic(5 * 60000);
-                jobBuilder.SetPersisted(true);
-                jobBuilder.SetBackoffCriteria(30000, Android.App.Job.BackoffPolicy.Linear);
+                App.jobBuilder = this.CreateJobBuilderUsingJobId<GeoService>(1)
+                    //.SetPeriodic(2000)
+                    .SetPersisted(true)
+                    .SetBackoffCriteria(30000, Android.App.Job.BackoffPolicy.Linear)
+                    .SetRequiresDeviceIdle(false)
+                    .SetOverrideDeadline(5000)
+                    .SetMinimumLatency(500)
+                    .SetRequiresCharging(false);
 
-                JobInfo jobInfo = jobBuilder.Build();  // creates a JobInfo object.
-                jobBuilder.Dispose();
 
-                JobScheduler jobScheduler = (JobScheduler)GetSystemService(JobSchedulerService);
-                int scheduleResult = jobScheduler.Schedule(jobInfo);
+                App.jobInfo = App.jobBuilder.Build();  // creates a JobInfo object.
+                var javaClass = Java.Lang.Class.FromType(typeof(GeoService));
+                //var compName = new ComponentName(this, javaClass);
+                //App.jobInfo = new JobInfo.Builder(jobId: 1, jobService: compName)
+                //    .SetPeriodic(2000)
+                //    //.SetOverrideDeadline(5000)
+                //    .SetPersisted(true)
+                //    .SetBackoffCriteria(30000, Android.App.Job.BackoffPolicy.Linear)
+                //    .SetRequiresDeviceIdle(false)
+                //    .SetRequiresCharging(false)
+                //    .Build();
 
-                if (scheduleResult != JobScheduler.ResultSuccess)
-                {
-                    Android.Content.Context context = Application.Context;
-                    Toast.MakeText(context, "Job succesfull", ToastLength.Long).Show();
-                }
+                App.jobBuilder.Dispose();
 
+                App.jobScheduler = (JobScheduler)GetSystemService(JobSchedulerService);
 
                 /* Fin */
 

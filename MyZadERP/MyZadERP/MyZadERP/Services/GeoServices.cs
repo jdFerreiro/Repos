@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using MyZadERP.Interfaces;
 using MyZadERP.Models.Facade;
 
 
 namespace MyZadERP.Services
 {
-    public class GeoServices
+    public class GeoServices 
     {
         private readonly Xamarin.Essentials.Location _location;
         private readonly GeolocationManager _geolocationManager;
@@ -22,6 +23,6 @@ namespace MyZadERP.Services
         {
             _ = await _geolocationManager.UpdateGeolocation(_location);
         }
-        
+
     }
 }
