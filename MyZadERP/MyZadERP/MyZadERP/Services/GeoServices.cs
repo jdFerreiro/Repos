@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using MyZadERP.Interfaces;
+﻿using Android.Util;
+using Android.Widget;
 using MyZadERP.Models.Facade;
+using System;
+using System.Threading.Tasks;
 
 
 namespace MyZadERP.Services
@@ -21,7 +20,15 @@ namespace MyZadERP.Services
 
         public async Task UpdateGeolocation()
         {
-            _ = await _geolocationManager.UpdateGeolocation(_location);
+            try
+            {
+                _ = await _geolocationManager.UpdateGeolocation(_location);
+            }
+            catch (Exception fail)
+            {
+                string TAG = "X:" + typeof(GeoServices).Name;
+                Log.Debug(TAG, $"Excepcion: {fail.Message}");
+            }
         }
 
     }

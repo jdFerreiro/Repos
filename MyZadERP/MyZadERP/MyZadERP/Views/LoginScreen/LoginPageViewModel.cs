@@ -18,12 +18,14 @@ namespace MyZadERP.Views.LoginScreen
         private string password;
         private bool savepassword;
         private bool isBusy;
-        
+        private string version;
+
         public LoginPageViewModel()
         {
             this.GoToViewCommand = new Command(this.LoadView);
             this.LoginCommand = new Command(async() => await ExecuteLogin(LoginType.Normal));
             this.ResetPasswordCommand = new Command(this.SubmitPasswordReset);
+            this.version = DependencyService.Get<IAppVersionAndBuild>().GetVersion();
         }
 
         public string Username
@@ -86,7 +88,6 @@ namespace MyZadERP.Views.LoginScreen
             }
         }
 
-
         public bool IsBusy
         {
             get => this.isBusy;
@@ -101,6 +102,13 @@ namespace MyZadERP.Views.LoginScreen
                 OnPropertyChanged();
             }
         }
+
+        public string Version
+        {
+            get { return version; }
+            set { version = value; }
+        }
+
 
         public Command GoToViewCommand { get; set; }
 
@@ -117,9 +125,9 @@ namespace MyZadERP.Views.LoginScreen
 
         private async Task ExecuteLogin(object obj)
         {
-            switch ((LoginType)obj)
+            switch ((LoginType)obj) 
             {
-                case LoginType.Normal:
+                case LoginType.Normal:  
                     IsBusy = true;
                     if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
                     {

@@ -12,9 +12,10 @@ namespace MyZadERP
 {
     public partial class App : Application
     {
-        //public static string MyZadBackEndURL = "http://h2533715.stratoserver.net:8080"; //AMBIENTE: PRO
+
+        public static string MyZadBackEndURL = "http://h2533715.stratoserver.net:8080"; //AMBIENTE: PRO
         //public static string MyZadBackEndURL = "http://h2533715.stratoserver.net:8090"; //AMBIENTE: PRE
-        public static string MyZadBackEndURL = "https://10.0.2.2:5001"; //AMBIENTE: LOCAL
+        //public static string MyZadBackEndURL = "https://10.0.2.2:5001"; //AMBIENTE: LOCAL
         //public static string MyZadBackEndURL = "https://192.168.1.125:5000"; //AMBIENTE: LOCAL
         public static string DataBasePath;
         public static double ScreenWidth;
@@ -24,6 +25,7 @@ namespace MyZadERP
         static MyZapDataBase database;
         public static DateTime StartTime;
         public static DateTime EndTime;
+
         public static JobInfo jobInfo;
         public static JobInfo.Builder jobBuilder;
         public static JobScheduler jobScheduler;

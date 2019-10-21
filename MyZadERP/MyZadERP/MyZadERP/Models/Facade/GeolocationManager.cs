@@ -45,6 +45,7 @@ namespace MyZadERP.Models.Facade
                 { "idioma", dispositivoIdioma.ToString() },
                 { "tipo", dispositivoTipo.ToString()  }
             };
+
             var _ws = new WebServiceRead(App.MyZadBackEndURL, "api/GeoLocation?api-version=1.0", requestParameters, Method.POST);
             var requestResponse = await _ws.Read();
             return requestResponse != string.Empty && requestResponse == "true";
