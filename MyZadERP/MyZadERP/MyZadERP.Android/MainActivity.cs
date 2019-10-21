@@ -1,24 +1,19 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Threading.Tasks;
 using Android;
 using Android.App;
-using Android.Content;
 using Android.Content.PM;
 using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using Android.OS;
-using Android.Support.Design.Widget;
-using Android.Util;
 using MyZadERP.Droid.Services;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+
 using Application = Android.App.Application;
 using Environment = System.Environment;
 using Android.App.Job;
-using System.Runtime.Remoting.Contexts;
 
 namespace MyZadERP.Droid
 {
@@ -62,7 +57,6 @@ namespace MyZadERP.Droid
                 /* Inicio de JobScheduler */
 
                 App.jobBuilder = this.CreateJobBuilderUsingJobId<GeoService>(1)
-                    //.SetPeriodic(2000)
                     .SetPersisted(true)
                     .SetBackoffCriteria(30000, Android.App.Job.BackoffPolicy.Linear)
                     .SetRequiresDeviceIdle(false)
@@ -72,16 +66,6 @@ namespace MyZadERP.Droid
 
 
                 App.jobInfo = App.jobBuilder.Build();  // creates a JobInfo object.
-                var javaClass = Java.Lang.Class.FromType(typeof(GeoService));
-                //var compName = new ComponentName(this, javaClass);
-                //App.jobInfo = new JobInfo.Builder(jobId: 1, jobService: compName)
-                //    .SetPeriodic(2000)
-                //    //.SetOverrideDeadline(5000)
-                //    .SetPersisted(true)
-                //    .SetBackoffCriteria(30000, Android.App.Job.BackoffPolicy.Linear)
-                //    .SetRequiresDeviceIdle(false)
-                //    .SetRequiresCharging(false)
-                //    .Build();
 
                 App.jobBuilder.Dispose();
 

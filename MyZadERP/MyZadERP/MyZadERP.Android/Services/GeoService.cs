@@ -1,24 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Android.App;
+using Android.App.Job;
+using Android.Locations;
+using Android.Util;
+using Android.Widget;
+using MyZadERP.Services;
+using System;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Android.App;
-using Android.App.Job;
-using Android.Content;
-using Android.Content.PM;
-using Android.Locations;
-using Android.OS;
-using Android.Runtime;
-using Android.Util;
-using Android.Views;
-using Android.Widget;
-using MyZadERP.Interfaces;
-using MyZadERP.Services;
 using Xamarin.Essentials;
-using Xamarin.Forms;
-using Location = Android.Locations.Location;
 
 namespace MyZadERP.Droid.Services
 {
@@ -31,15 +21,18 @@ namespace MyZadERP.Droid.Services
     {
         LocationManager _locationManager;
         static readonly string TAG = "X:" + typeof(GeoService).Name;
-        static readonly int TimerWait = 30000;
+        static readonly int TimerWait = 10000;
         Timer timer;
         DateTime startTime;
         bool _isStarted = false;
 
         public override bool OnStartJob(JobParameters @params)
         {
+            if (_isStarted) return false;
+
             App.EndTime = DateTime.Now;
             TimeSpan diffTime = App.EndTime - App.StartTime;
+            Android.Content.Context context = Application.Context;
 
             Task.Run(() =>
             {
@@ -58,13 +51,39 @@ namespace MyZadERP.Droid.Services
                         _locationManager = (LocationManager)GetSystemService(LocationService);
                         startTime = DateTime.UtcNow;
                         Log.Debug(TAG, $"Inicio del Servicio de GeoLocation, a las {startTime}.");
+
                         timer = new Timer(async delegate (object state)
                         {
-                            Xamarin.Essentials.Location location = await Geolocation.GetLastKnownLocationAsync().ConfigureAwait(false);
-                            if (location != null)
+                            var request = new GeolocationRequest(GeolocationAccuracy.Best);
+
+                            //Xamarin.Essentials.Location location = await Geolocation.GetLastKnownLocationAsync();
+                            //if (location == null)
+                            //{
+                            //    string Address = string.Empty;
+                            //    var locations = await Geocoding.GetLocationsAsync(Address);
+                            //    location = locations?.FirstOrDefault();
+                            //}
+
+                            //var request = new GeolocationRequest((GeolocationAccuracy)accuracy);
+                            CancellationToken cts = new CancellationToken();
+                            try
                             {
-                                GeoServices _geoServices = new GeoServices(location);
-                                await _geoServices.UpdateGeolocation().ConfigureAwait(false);
+                                var location = await Geolocation.GetLocationAsync(request, cts).ConfigureAwait(false);
+
+                                if (location != null)
+                                {
+                                    GeoServices _geoServices = new GeoServices(location);
+                                    await _geoServices.UpdateGeolocation().ConfigureAwait(false);
+                                    Log.Debug(TAG, $"Actualización en BBDD, a las {startTime}.");
+                                }
+                                else
+                                {
+                                    Log.Debug(TAG, $"No se pudo obtener la geolocalización a las {startTime}.");
+                                }
+                            }
+                            catch(Exception fail)
+                            {
+                                Log.Debug(TAG, $"Excepcion: {fail.Message}");
                             }
                         }, startTime, 0, TimerWait);
                         _isStarted = true;
@@ -75,14 +94,18 @@ namespace MyZadERP.Droid.Services
                 catch (Exception fail)
                 {
                     Log.Debug(TAG, $"Excepcion: {fail.Message}");
-                    return false; // StartCommandResult.StickyCompatibility;
+                    Toast.MakeText(context, fail.Message, ToastLength.Long).Show();
+                    _isStarted = false;
+                    return _isStarted; // StartCommandResult.StickyCompatibility;
                 }
             });
-            return false;
+
+            return _isStarted;
         }
 
         public override bool OnStopJob(JobParameters @params)
         {
+            Log.Debug(TAG, $"Job Stop at {DateTime.UtcNow}");
             return false;
         }
     }
