@@ -21,8 +21,6 @@ namespace MyZadERP.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         private MyZadERP.App _app;
-        //private Intent _geoService;
-        //private bool _geoServiceStart;
         private bool _geoPermission;
 
         protected override void OnCreate(Bundle savedInstanceState)

@@ -49,12 +49,12 @@ namespace MyZadERP.Droid.Services
                     else
                     {
                         _locationManager = (LocationManager)GetSystemService(LocationService);
-                        startTime = DateTime.UtcNow;
                         Log.Debug(TAG, $"Inicio del Servicio de GeoLocation, a las {startTime}.");
 
                         timer = new Timer(async delegate (object state)
                         {
                             var request = new GeolocationRequest(GeolocationAccuracy.Best);
+                            startTime = DateTime.UtcNow;
 
                             //Xamarin.Essentials.Location location = await Geolocation.GetLastKnownLocationAsync();
                             //if (location == null)
@@ -94,7 +94,6 @@ namespace MyZadERP.Droid.Services
                 catch (Exception fail)
                 {
                     Log.Debug(TAG, $"Excepcion: {fail.Message}");
-                    Toast.MakeText(context, fail.Message, ToastLength.Long).Show();
                     _isStarted = false;
                     return _isStarted; // StartCommandResult.StickyCompatibility;
                 }
